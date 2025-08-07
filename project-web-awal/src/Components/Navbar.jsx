@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 function Navbar({ title, className, name }) {
   return (
-    <header>
+    <header className="items-center">
       <nav className={className}>
         <div className="flex gap-40 text-md items-center font-semibold">
           <div>
-            <h1 className="text-4xl font-bold">{title}</h1>
+            <h1 className="text-5xl font-bold">{title}</h1>
           </div>
           <ul className="flex gap-5 text-sm">
             <li>
