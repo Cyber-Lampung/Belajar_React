@@ -1,15 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Navbar from "../../Components/Navbar";
 import Input from "../../Components/Input";
 import Button from "../../Components/Button";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Chart from "chart.js/auto";
 
 function Home() {
+  const chartRef = useRef(null); // 1. bikin ref dulu
+  let chartInstance = null;
+
   useEffect(() => {
     AOS.init({
       duration: 1000, // durasi animasi dalam ms
-      once: true, // animasi hanya jalan sekali saat scroll
+      once: false, // animasi hanya jalan sekali saat scroll
+    });
+
+    const ctx = chartRef.current.getContext("2d"); // 2. ctx dibuat di sini, setelah render
+    if (chartInstance) {
+      chartInstance.destroy(); // biar gak dobel chart saat re-render
+    }
+    chartInstance = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [
+          {
+            label: "Votes",
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+            ],
+            borderColor: [
+              "rgba(255,99,132,1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+              "rgba(255, 159, 64, 1)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+      },
     });
   }, []);
   const Title = "FinPay";
@@ -101,7 +142,7 @@ function Home() {
             <div className="mt-30">
               <div className="boxCardFeature">
                 <div className="CardBox flex gap-30">
-                  <div className="Card1">
+                  <div className="Card1" data-aos="fade-right">
                     <i className="creditCard bi-credit-card text-4xl" />
                     <p className="text-2xl">Free Transfers</p>
                     <p className="text-stone-400 text-sm mt-3">
@@ -109,7 +150,7 @@ function Home() {
                       repeat purpuce by scheduling <br /> recurring payment
                     </p>
                   </div>
-                  <div className="Card2">
+                  <div className="Card2" data-aos="fade-down">
                     <i className="digram2 bi-diagram-2 text-4xl" />
                     <p className="text-2xl">Multiple Create Account</p>
                     <p className="text-stone-400 text-sm mt-3">
@@ -117,7 +158,7 @@ function Home() {
                       repeat purpuce by scheduling <br /> recurring payment
                     </p>
                   </div>
-                  <div className="Card3">
+                  <div className="Card3" data-aos="fade-left">
                     <i className="Shield bi-shield-exclamation text-4xl" />
                     <p className="text-2xl">Multiple Create Account</p>
                     <p className="text-stone-400 text-sm mt-3">
@@ -133,17 +174,23 @@ function Home() {
       </article>
       <article className="pt-100 bg-white">
         <div className="asideTitle">
-          <span className="text-md text-blue-500 flex justify-center">
+          <span
+            className="text-md text-blue-500 flex justify-center"
+            data-aos="fade-down"
+          >
             WHY US
           </span>
         </div>
         <div className="TitleSection mt-4 font-bold">
-          <h1 className="text-3xl flex justify-center">
+          <h1 className="text-3xl flex justify-center" data-aos="fade-up">
             Why they Prefer Finpay
           </h1>
         </div>
         <div className="flex justify-center mt-15 gap-20">
-          <div className="Card1 w-110 h-60 bg-stone-100 rounded-lg">
+          <div
+            className="Card1 w-110 h-60 bg-stone-100 rounded-lg"
+            data-aos="fade-right"
+          >
             <div className="wrapperCard p-15">
               <p className="text-5xl text-blue-400 font-bold">3K +</p>
               <p className="mt-5 text-xl font-semibold">
@@ -151,7 +198,10 @@ function Home() {
               </p>
             </div>
           </div>
-          <div className="Card2 w-110 h-60 bg-stone-100 rounded-lg">
+          <div
+            className="Card2 w-110 h-60 bg-stone-100 rounded-lg"
+            data-aos="fade-left"
+          >
             <div className="wrapperCard2 p-10">
               <p className="text-xl text-black font-semibold">
                 Instan Withdraw your funds <br /> at any Time
@@ -160,28 +210,153 @@ function Home() {
                 <img
                   src="https://vectorseek.com/wp-content/uploads/2023/06/Tokenize-Xchange-TKX-Logo-Vector.jpg"
                   alt=""
-                  className="w-19 "
+                  className="w-19 rounded-lg"
                 />
                 <img
                   src="https://img.freepik.com/premium-vector/ton-cryptocurrency-cartoon-coin-illustration-white-background_626313-775.jpg"
                   alt=""
-                  className="w-17"
+                  className="w-17 rounded-lg"
                 />
               </div>
             </div>
           </div>
         </div>
         <div className="mt-10">
-          <div className="w-[65%] h-70 m-auto bg-stone-100 rounded-lg">
-            <div className="p-10">
+          <div
+            className="w-[65%] h-70 m-auto bg-green-100 rounded-lg flex items-center justify-center"
+            data-aos="fade-up"
+          >
+            <div className="flex items-center gap-40">
               <aside className="left">
-                <p className="text-xl font-semibold">No Asset votality</p>
+                <p className="text-4xl font-semibold">No Asset votality</p>
+                <p className="mt-5 text-sm text-stone-500">
+                  Generate returns on your <br /> case reverses whitout making{" "}
+                  <br /> any investements
+                </p>
               </aside>
-              <aside className="right"></aside>
+              <aside className="right">
+                <div className="w-120 h-60 bg-white rounded-lg">
+                  <canvas ref={chartRef}></canvas>
+                </div>
+              </aside>
             </div>
           </div>
         </div>
       </article>
+
+      {/* for section three */}
+
+      <article className="pt-30 bg-white">
+        <aside
+          className="w-[95%] h-150 m-auto rounded-lg"
+          style={{ backgroundColor: "#003566" }}
+          data-aos="fade-up"
+        >
+          <div className="p-25">
+            <div className="subJudul">
+              <p className="text-md text-stone-400 font-semibold">Step</p>
+              <p className="text-4xl text-white font-bold mt-5">
+                Maximize your returns with a <br /> Reverse account that
+                generates.
+              </p>
+            </div>
+            <div className="mt-10 flex gap-10">
+              <div
+                className="Card1 w-70 h-50 rounded-lg"
+                style={{ backgroundColor: "#0f4c5c" }}
+                data-aos="fade-right"
+              >
+                <div className="p-2">
+                  <p className="text-8xl text-white pl-5">1</p>
+                  <div className="relative top-[-10px] left-7">
+                    <p className="text-white">Open your Account</p>
+                    <p className="text-stone-400 text-xs mt-1">
+                      Sig In up to finpay and set up your account <br /> from
+                      the Dashboard
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="Card1 w-70 h-50 rounded-lg"
+                style={{ backgroundColor: "#0f4c5c" }}
+                data-aos="fade-up"
+              >
+                <div className="p-2">
+                  <p className="text-8xl text-white pl-5">2</p>
+                  <div className="relative top-[-10px] left-7">
+                    <p className="text-white">Transfers your Money</p>
+                    <p className="text-stone-400 text-xs mt-1">
+                      move money from to another account into <br /> and start
+                      to earning up
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="Card1 w-70 h-50 rounded-lg"
+                style={{ backgroundColor: "#0f4c5c" }}
+                data-aos="fade-left"
+              >
+                <div className="p-2">
+                  <p className="text-8xl text-white pl-5">3</p>
+                  <div className="relative top-[-10px] left-7">
+                    <p className="text-white">Watch your balance grow</p>
+                    <p className="text-stone-400 text-xs mt-1">
+                      Accesed Instally and remain insulated <br /> from market
+                      volatility
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </article>
+
+      <article className="pt-40 pb-40  bg-white">
+        <div className="titleFour">
+          <div className="items-center">
+            <p className="text-md text-blue-500 text-center">OUR MISSION</p>
+            <div className="text-center font-semibold mt-10 text-4xl">
+              <p>We've Helped</p>
+              <p>inovative companies</p>
+            </div>
+            <div className="mt-10">
+              <p className="text-stone-400 text-sm text-center">
+                Hundlered of all sizes and accross all industries <br /> have
+                madea big imporovements with us
+              </p>
+            </div>
+          </div>
+          <div className="mt-10 flex justify-center gap-30">
+            <div className="card1">
+              <p className="text-5xl font-bold text-center">24%</p>
+              <p>Revenue business</p>
+            </div>
+            <div className="card1">
+              <p className="text-5xl font-bold text-center">180K</p>
+              <p>In annuel revenue</p>
+            </div>
+            <div className="card1">
+              <p className="text-5xl font-bold text-center">10+</p>
+              <p>Month of runway</p>
+            </div>
+          </div>
+
+          <div className="mt-30">
+            <div>
+              <p className="text-center">Choose Plan</p>
+            </div>
+            <div className="mt-20 flex gap-30 justify-center">
+              <div className="Card w-100 h-50 bg-stone-100 rounded-lg"></div>
+              <div className="Card w-100 h-50 bg-stone-300 rounded-lg"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article className="mt-40"></article>
     </main>
   );
 }
