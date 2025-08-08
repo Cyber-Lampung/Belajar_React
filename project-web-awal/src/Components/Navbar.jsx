@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Navbar({ title, className, name }) {
   return (
-    <header className="items-center">
+    <header className="items-center sticky top-0 z-99999">
       <nav className={className}>
         <div className="flex gap-40 text-md items-center font-semibold">
           <div>
